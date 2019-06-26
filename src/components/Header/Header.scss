@@ -1,0 +1,18 @@
+.header {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 15px 15px;
+  border-bottom: 1px solid #d9d9d9;
+  &-menu {
+    border-bottom: none !important;
+  }
+  &-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+  }
+}
