@@ -1,0 +1,21 @@
+.wrapper {
+  width: 80vw;
+  margin: 0 auto;
+}
+
+.home {
+  &-title {
+    text-align: center;
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.ant-card {
+  width: 24%;
+  margin-bottom: 20px !important;
+}
