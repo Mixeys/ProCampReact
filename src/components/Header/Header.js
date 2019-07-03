@@ -8,7 +8,7 @@ import logo from '../../assets/img/logo.png'
 const { Search } = Input
 
 const Header = () => {
-  const [current, setCurrent] = useState('home')
+  const [current, setCurrent] = useState('')
   const handleClick = e => {
     setCurrent(e.key)
   }

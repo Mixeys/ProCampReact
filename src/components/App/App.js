@@ -6,22 +6,22 @@ import './App.scss'
 import Header from '../Header/Header'
 import Home from '../../pages/Home'
 import Teams from '../../pages/Teams'
+import Team from '../../pages/Team'
 import Fixtures from '../../pages/Fixtures'
 import Odds from '../../pages/Odds'
 
 const App = () => {
   return (
-    <Fragment>
       <Router>
         <Fragment>
           <Header />
           <Route exact path="/" component={Home} />
-          <Route path="/teams" component={Teams} />
+          <Route exact path="/teams" component={Teams} />
+          <Route path="/teams/:id" component={Team} />
           <Route path="/fixtures" component={Fixtures} />
           <Route path="/odds" component={Odds} />
         </Fragment>
       </Router>
-    </Fragment>
   )
 }
 

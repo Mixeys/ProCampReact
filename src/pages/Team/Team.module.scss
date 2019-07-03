@@ -1,0 +1,14 @@
+.ant-card {
+  width: 50%;
+  margin: 0 auto !important;
+  text-align: center;
+}
+
+.team {
+  &-img {
+    margin-bottom: 40px;
+  }
+  &-text {
+    font-size: 24px;
+  }
+}
