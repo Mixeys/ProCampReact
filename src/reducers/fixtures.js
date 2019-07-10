@@ -1,9 +1,12 @@
 import * as Type from '../actions/constants'
 
 const initialState = {
-  isFetching: false,
+  isFetchingFixtures: false,
   fixtures: [],
-  error: '',
+  errorFixtures: '',
+  isFetchingEvents: false,
+  events: [],
+  errorEvents: '',
 }
 
 export function fixturesReducer(state = initialState, action) {
@@ -11,20 +14,37 @@ export function fixturesReducer(state = initialState, action) {
     case Type.GET_FIXTURES_REQUEST:
       return {
         ...state,
-        isFetching: true,
+        isFetchingFixtures: true,
       }
     case Type.GET_FIXTURES_SUCCESS:
       return {
         ...state,
-        isFetching: false,
+        isFetchingFixtures: false,
         fixtures: action.payload,
       }
     case Type.GET_FIXTURES_FAILURE:
       return {
         ...state,
-        isFetching: false,
-        error: action.payload,
+        isFetchingFixtures: false,
+        errorFixtures: action.payload,
       }
+      case Type.GET_EVENT_REQUEST:
+        return {
+          ...state,
+          isFetchingEvents: true,
+        }
+      case Type.GET_EVENT_SUCCESS:
+        return {
+          ...state,
+          isFetchingEvents: false,
+          events: action.payload,
+        }
+      case Type.GET_EVENT_FAILURE:
+        return {
+          ...state,
+          isFetchingEvents: false,
+          errorEvents: action.payload,
+        }
     default:
       return state
   }

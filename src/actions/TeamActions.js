@@ -7,7 +7,6 @@ const getTeam = (id) => async (dispatch, getState) => {
     })
     try {
         const response = await axios.get(`/teams/team/${id}`)
-        console.log('response: ', response)
         dispatch({
             type: Type.GET_TEAM_SUCCESS,
             payload: response.data.api.teams,

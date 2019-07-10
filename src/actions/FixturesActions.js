@@ -7,7 +7,6 @@ const getFixtures = () => async (dispatch, getState) => {
     })
     try {
         const response = await axios.get(`fixtures/league/2`)
-        console.log('response: ', response)
         dispatch({
             type: Type.GET_FIXTURES_SUCCESS,
             payload: response.data.api.fixtures,
@@ -20,4 +19,23 @@ const getFixtures = () => async (dispatch, getState) => {
     }
 }
 
-export { getFixtures }
+const getEvent = (id) => async (dispatch, getState) => {
+    dispatch({
+        type: Type.GET_EVENT_REQUEST,
+    })
+    try {
+        const response = await axios.get(`events/${id}`)
+        console.log('response.event: ', response)
+        dispatch({
+            type: Type.GET_EVENT_SUCCESS,
+            payload: response.data.api.events,
+        })
+    } catch (error) {
+        dispatch({
+            type: Type.GET_EVENT_FAILURE,
+            payload: error,
+        })
+    }
+}
+
+export { getFixtures, getEvent }

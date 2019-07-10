@@ -3,10 +3,12 @@ import { Table, Spin } from 'antd'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 
 import './Fixtures.scss'
 
 import { getFixtures } from '../../actions/FixturesActions'
+import { getEvent } from '../../actions/FixturesActions'
 
 class Fixtures extends Component {
   columns = [
@@ -24,6 +26,7 @@ class Fixtures extends Component {
       title: 'Home team',
       dataIndex: 'home',
       key: 'home',
+      render: (text, record) => <Link to={`/teams/${record.homeId}`}>{text}</Link>,
     },
     {
       title: 'Score',
@@ -34,6 +37,7 @@ class Fixtures extends Component {
       title: 'Away team',
       dataIndex: 'away',
       key: 'away',
+      render: (text, record) => <Link to={`/teams/${record.awayId}`}>{text}</Link>,
     },
   ]
 
@@ -48,7 +52,7 @@ class Fixtures extends Component {
           <h1 className="teams-title">Fixtures.</h1>
           <div className="row">
             <div className="col-12">
-              {this.props.isFetching ? (
+              {this.props.isFetchingFixtures ? (
                 <div className="example">
                   <Spin />
                 </div>
@@ -61,10 +65,53 @@ class Fixtures extends Component {
                       status: item.status,
                       date: moment(item.event_date).format('MM/DD/YYYY kk:mm:ss'),
                       home: item.homeTeam.team_name,
+                      homeId: item.homeTeam.team_id,
                       score: item.score.fulltime,
                       away: item.awayTeam.team_name,
+                      awayId: item.awayTeam.team_id,
+                      fixtureId: item.fixture_id,
                     }
                   })}
+                  onExpand={(expand, record) => this.props.getEvent(record.fixtureId)}
+                  expandedRowRender={record => {
+                    const columns = [
+                      {
+                        title: 'Detail',
+                        dataIndex: 'detail',
+                        key: 'detail',
+                      },
+                      {
+                        title: 'Elapsed',
+                        dataIndex: 'elapsed',
+                        key: 'elapsed',
+                      },
+                      {
+                        title: 'Player',
+                        dataIndex: 'player',
+                        key: 'player',
+                      },
+                      {
+                        title: 'Team name',
+                        dataIndex: 'teamName',
+                        key: 'teamName',
+                      },
+                      {
+                        title: 'Type',
+                        dataIndex: 'type',
+                        key: 'type',
+                      },
+                    ]
+                    const event = this.props.events.map(item => {
+                      return {
+                        elapsed: item.elapsed,
+                        teamName: item.teamName,
+                        player: item.player,
+                        type: item.type,
+                        detail: item.detail,
+                      }
+                    })
+                    return <Table columns={columns} dataSource={event} />
+                  }}
                 />
               )}
             </div>
@@ -77,21 +124,25 @@ class Fixtures extends Component {
 
 Fixtures.propTypes = {
   fixtures: PropTypes.array.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  error: PropTypes.string,
+  isFetchingFixtures: PropTypes.bool.isRequired,
+  errorFixtures: PropTypes.string,
 }
 
 const mapStateToProps = ({ fixtures }) => {
   return {
-    isFetching: fixtures.isFetching,
+    isFetchingFixtures: fixtures.isFetchingFixtures,
     fixtures: fixtures.fixtures,
-    error: fixtures.error,
+    errorFixtures: fixtures.errorFixtures,
+    isFetchingEvents: fixtures.isFetchingEvents,
+    events: fixtures.events,
+    errorEvents: fixtures.errorEvents,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     getFixtures: () => dispatch(getFixtures()),
+    getEvent: id => dispatch(getEvent(id)),
   }
 }
 
