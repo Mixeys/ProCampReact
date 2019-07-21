@@ -3,12 +3,11 @@ import { Table, Spin } from 'antd'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import moment from 'moment'
-import { Link } from 'react-router-dom'
+import { Link } from '@reach/router'
 
 import './Fixtures.scss'
 
-import { getFixtures } from '../../actions/FixturesActions'
-import { getEvent } from '../../actions/FixturesActions'
+import * as Type from '../../actions/constants';
 
 class Fixtures extends Component {
   columns = [
@@ -26,7 +25,7 @@ class Fixtures extends Component {
       title: 'Home team',
       dataIndex: 'home',
       key: 'home',
-      render: (text, record) => <Link to={`/teams/${record.homeId}`}>{text}</Link>,
+      render: (text, record) => <Link to={`/teams/${record.homeId}`}  onClick={() => this.props.getTeam(record.homeId)}>{text}</Link>,
     },
     {
       title: 'Score',
@@ -37,7 +36,7 @@ class Fixtures extends Component {
       title: 'Away team',
       dataIndex: 'away',
       key: 'away',
-      render: (text, record) => <Link to={`/teams/${record.awayId}`}>{text}</Link>,
+      render: (text, record) => <Link to={`/teams/${record.awayId}`} onClick={() => this.props.getTeam(record.awayId)}>{text}</Link>,
     },
   ]
 
@@ -110,7 +109,7 @@ class Fixtures extends Component {
                         detail: item.detail,
                       }
                     })
-                    return <Table columns={columns} dataSource={event} />
+                    return <Table columns={columns} dataSource={event} loading={this.props.isFetchingEvents} />
                   }}
                 />
               )}
@@ -141,8 +140,9 @@ const mapStateToProps = ({ fixtures }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getFixtures: () => dispatch(getFixtures()),
-    getEvent: id => dispatch(getEvent(id)),
+    getFixtures: () => dispatch({type: Type.FETCHED_FIXTURES}),
+    getEvent: id => dispatch({type: Type.FETCHED_EVENT, payload: id}),
+    getTeam: id => dispatch({ type: Type.FETCHED_TEAM, payload: id}),
   }
 }
 

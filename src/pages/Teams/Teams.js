@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { Card, Spin } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link } from '@reach/router'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 
 import './Teams.scss'
 
-import { getTeams } from '../../actions/TeamsActions'
-import { getTeam } from '../../actions/TeamActions'
+import * as Type from '../../actions/constants'
 
 const { Meta } = Card
 
@@ -68,8 +67,8 @@ const mapStateToProps = ({ teams }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTeams: () => dispatch(getTeams()),
-    getTeam: id => dispatch(getTeam(id)),
+    getTeams: () => dispatch({ type: Type.FETCHED_TEAMS }),
+    getTeam: id => dispatch({ type: Type.FETCHED_TEAM, payload: id}),
   }
 }
 

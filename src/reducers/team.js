@@ -7,6 +7,7 @@ const initialState = {
 }
 
 export function teamReducer(state = initialState, action) {
+  console.log('reducerAction: ', action)
   switch (action.type) {
     case Type.GET_TEAM_REQUEST:
       return {

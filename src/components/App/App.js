@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Router } from '@reach/router'
 
 import './App.scss'
 
@@ -12,16 +12,16 @@ import Odds from '../../pages/Odds'
 
 const App = () => {
   return (
+    <Fragment>
+      <Header />
       <Router>
-        <Fragment>
-          <Header />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/teams" component={Teams} />
-          <Route path="/teams/:id" component={Team} />
-          <Route path="/fixtures" component={Fixtures} />
-          <Route path="/odds" component={Odds} />
-        </Fragment>
+        <Home path="/" />
+        <Teams path="teams" />
+        <Team path="teams/:id" />
+        <Fixtures path="fixtures" />
+        <Odds path="odds" />
       </Router>
+    </Fragment>
   )
 }
 

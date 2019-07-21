@@ -1,22 +1,23 @@
-import axios from '../api/axios'
-import * as Type from './constants'
+import * as Type from '../actions/constants'
 
-const getTeam = (id) => async (dispatch, getState) => {
-    dispatch({
-        type: Type.GET_TEAM_REQUEST,
-    })
-    try {
-        const response = await axios.get(`/teams/team/${id}`)
-        dispatch({
-            type: Type.GET_TEAM_SUCCESS,
-            payload: response.data.api.teams,
-        })
-    } catch (error) {
-        dispatch({
-            type: Type.GET_TEAM_FAILURE,
-            payload: error,
-        })
-    }
+const requestTeam = () => {
+  return {
+    type: Type.GET_TEAM_REQUEST,
+  }
 }
 
-export { getTeam }
+const requestTeamSuccess = data => {
+  return {
+    type: Type.GET_TEAM_SUCCESS,
+    payload: data.data.api.teams,
+  }
+}
+
+const requestTeamError = error => {
+  return {
+    type: Type.GET_TEAM_FAILURE,
+    payload: error,
+  }
+}
+
+export { requestTeam, requestTeamSuccess, requestTeamError }

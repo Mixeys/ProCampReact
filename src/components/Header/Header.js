@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Menu, Icon, Input } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link } from '@reach/router'
 
 import './Header.scss'
 import logo from '../../assets/img/logo.png'
