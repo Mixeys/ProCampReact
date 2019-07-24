@@ -3,23 +3,38 @@ import { Layout, Row, Col } from 'antd'
 
 import './Home.scss'
 
-const { Content } = Layout;
+import FixturesComponent from '../../components/FixturesComponent'
+import StandingsComponent from '../../components/StandingsComponent'
+import OddsComponent from '../../components/OddsComponent'
+
+const { Content } = Layout
 
 class Home extends Component {
   render() {
     return (
       <Content
         style={{
-          background: '#eee',
           padding: 24,
           margin: 0,
           minHeight: '100%',
         }}
       >
         <Row gutter={16}>
-          <Col span={8} className="gutter-row"><div className="gutter-box" style={{background: 'red',}}>col-6</div></Col>
-          <Col span={8} className="gutter-row"><div className="gutter-box" style={{background: 'red',}}>col-6</div></Col>
-          <Col span={8} className="gutter-row"><div className="gutter-box" style={{background: 'red',}}>col-6</div></Col>
+          <Col span={8} className="gutter-row">
+            <div className="gutter-box">
+              <FixturesComponent />
+            </div>
+          </Col>
+          <Col span={8} className="gutter-row">
+            <div className="gutter-box">
+              <StandingsComponent />
+            </div>
+          </Col>
+          <Col span={8} className="gutter-row">
+            <div className="gutter-box">
+              <OddsComponent />
+            </div>
+          </Col>
         </Row>
       </Content>
     )

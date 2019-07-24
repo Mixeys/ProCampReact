@@ -1,0 +1,16 @@
+.fixtures {
+  &-row {
+    margin-bottom: 15px;
+  }
+  &-col {
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px;
+    &_start {
+      justify-content: flex-start;
+    }
+  }
+  &-title {
+    text-align: center;
+  }
+}
