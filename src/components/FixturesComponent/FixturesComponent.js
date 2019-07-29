@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Row, Col, Button, Menu, Dropdown, Table } from 'antd'
+import { Row, Col, Button, Table } from 'antd'
 import { connect } from 'react-redux'
-import { PropTypes } from 'prop-types'
 import moment from 'moment'
 import { Link } from '@reach/router'
+import axios from '../../api/axios'
 
 import './FixturesComponent.scss'
 
@@ -11,19 +11,11 @@ import * as Type from '../../actions/constants'
 
 export class FixturesComponent extends Component {
   componentDidMount() {
-    this.props.getFixtures()
+    this.props.getFixtures('1')
   }
   handleClick = e => {
-    console.log('click: ', e)
-    // this.props.getFixtures()
+    this.props.getFixtures(e.target.value)
   }
-  menu = (
-    <Menu onClick={this.handleClick}>
-      <Menu.Item>England</Menu.Item>
-      <Menu.Item>Ukraine</Menu.Item>
-      <Menu.Item>Italia</Menu.Item>
-    </Menu>
-  )
   columns = [
     {
       title: 'Event date',
@@ -72,15 +64,16 @@ export class FixturesComponent extends Component {
     return (
       <section className="fixtures">
         <Row className="fixtures-row">
-          <Col span={12} className="fixtures-col">
-            <Button type="primary" onClick={this.handleClick}>
-              All
+          <Col span={24} className="fixtures-col">
+            <Button type="primary" onClick={this.handleClick} value="1">
+              World Cup
             </Button>
-          </Col>
-          <Col span={12} className="fixtures-col fixtures-col_start">
-            <Dropdown overlay={this.menu} placement="bottomCenter">
-              <Button>FA Premier League</Button>
-            </Dropdown>
+            <Button type="primary" onClick={this.handleClick} value="2">
+              England
+            </Button>
+            <Button type="primary" onClick={this.handleClick} value="11">
+              Portugal
+            </Button>
           </Col>
         </Row>
         <Row className="fixtures-row">
@@ -105,7 +98,7 @@ const mapStateToProps = ({ fixtures }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getFixtures: () => dispatch({ type: Type.FETCHED_FIXTURES }),
+    getFixtures: id => dispatch({ type: Type.FETCHED_FIXTURES, payload: id }),
     getEvent: id => dispatch({ type: Type.FETCHED_EVENT, payload: id }),
     getTeam: id => dispatch({ type: Type.FETCHED_TEAM, payload: id }),
   }

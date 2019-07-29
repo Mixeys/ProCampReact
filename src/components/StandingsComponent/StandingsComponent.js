@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import { Row, Col, Button, Menu, Dropdown, Table } from 'antd'
+import { Row, Col, Button, Table } from 'antd'
 import { connect } from 'react-redux'
-import { PropTypes } from 'prop-types'
-import moment from 'moment'
-import { Link } from '@reach/router'
 
 import './StandingsComponent.scss'
 
@@ -11,11 +8,11 @@ import * as Type from '../../actions/constants'
 
 export class StandingsComponent extends Component {
   componentDidMount() {
-    this.props.getStandings()
+    this.props.getStandings('1')
   }
 
   handleClick = e => {
-    console.log('click: ', e)
+    this.props.getStandings(e.target.value)
   }
 
   columns = [
@@ -43,28 +40,25 @@ export class StandingsComponent extends Component {
       title: 'Logo',
       dataIndex: 'logo',
       key: 'logo',
+      render: (text, record) => {
+        return <img src={record.logo} alt="logo" width={50} />
+      },
     },
   ]
 
   render() {
-    console.log('standings???: ', this.props.standings)
-    console.log('data: ', this.standingsData)
     return (
       <section className="fixtures">
         <Row className="fixtures-row">
-          <Col span={8} className="fixtures-col">
-            <Button type="primary" onClick={this.handleClick}>
-              League
+          <Col span={24} className="fixtures-col">
+            <Button type="primary" onClick={this.handleClick} value="1">
+              World Cup
             </Button>
-          </Col>
-          <Col span={8} className="fixtures-col">
-            <Button type="primary" onClick={this.handleClick}>
-              FA Cup
+            <Button type="primary" onClick={this.handleClick} value="2">
+              England
             </Button>
-          </Col>
-          <Col span={8} className="fixtures-col">
-            <Button type="primary" onClick={this.handleClick}>
-              ...
+            <Button type="primary" onClick={this.handleClick} value="11">
+              Portugal
             </Button>
           </Col>
         </Row>
@@ -72,15 +66,18 @@ export class StandingsComponent extends Component {
           <h2 className="fixtures-title">Standings</h2>
           <Table
             columns={this.columns}
-            dataSource={this.props.standings && this.props.standings.map(item => {
-              return {
-                rank: item.rank,
-                team_id: item.team_id,
-                teamName: item.teamName,
-                forme: item.forme,
-                logo: item.logo,
-              }
-            })}
+            dataSource={
+              this.props.standings &&
+              this.props.standings.map(item => {
+                return {
+                  rank: item.rank,
+                  team_id: item.team_id,
+                  teamName: item.teamName,
+                  forme: item.forme,
+                  logo: item.logo,
+                }
+              })
+            }
           />
         </Row>
       </section>
@@ -90,14 +87,13 @@ export class StandingsComponent extends Component {
 
 const mapStateToProps = ({ standings }) => {
   return {
-    standings: standings.standings,
+    standings: standings.standings[0],
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getFixtures: () => dispatch({ type: Type.FETCHED_FIXTURES }),
-    getStandings: () => dispatch({ type: Type.FETCHED_STANDINGS }),
+    getStandings: id => dispatch({ type: Type.FETCHED_STANDINGS, payload: id }),
   }
 }
 

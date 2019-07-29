@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import { Row, Col, Button, Menu, Dropdown, Table } from 'antd'
+import { Row, Table } from 'antd'
 import { connect } from 'react-redux'
-import { PropTypes } from 'prop-types'
-import moment from 'moment'
-import { Link } from '@reach/router'
 
 import './OddsComponent.scss'
 
@@ -16,44 +13,24 @@ export class OddsComponent extends Component {
     
     columns = [
         {
-          title: 'Event date',
-          dataIndex: 'date',
-          key: 'date',
+          title: 'Value',
+          dataIndex: 'value',
+          key: 'value',
         },
         {
-          title: 'Home team',
-          dataIndex: 'home',
-          key: 'home',
-          render: (text, record) => (
-            <Link to={`/teams/${record.homeId}`} onClick={() => this.props.getTeam(record.homeId)}>
-              {text}
-            </Link>
-          ),
-        },
-        {
-          title: 'Draw',
-          dataIndex: 'draw',
-          key: 'draw',
-        },
-        {
-          title: 'Away team',
-          dataIndex: 'away',
-          key: 'away',
-          render: (text, record) => (
-            <Link to={`/teams/${record.awayId}`} onClick={() => this.props.getTeam(record.awayId)}>
-              {text}
-            </Link>
-          ),
+          title: 'Odd',
+          dataIndex: 'odd',
+          key: 'odd',
         },
       ]
     render() {
         return (
-            <section className="fixtures">
-              <Row className="fixtures-row">
-                <h2 className="fixtures-title">Odds</h2>
+            <section className="odds">
+              <Row className="odds-row">
+                <h2 className="odds-title">Odds</h2>
                 <Table
                   columns={this.columns}
-                //   dataSource={this.event}
+                  dataSource={this.props.odds}
                   loading={this.props.isFetchingEvents}
                 />
               </Row>
@@ -62,14 +39,14 @@ export class OddsComponent extends Component {
     }
 }
 
-const mapStateToProps = ({ fixtures }) => {
+const mapStateToProps = ({odds}) => {
     return {
+      odds: odds.odds
     }
   }
   
   const mapDispatchToProps = dispatch => {
     return {
-      getFixtures: () => dispatch({ type: Type.FETCHED_FIXTURES }),
       getOdds: () => dispatch({ type: Type.FETCHED_ODDS }),
     }
   }

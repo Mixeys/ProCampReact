@@ -1,6 +1,8 @@
-import { takeEvery, call, put } from 'redux-saga/effects'
+import { takeEvery, put } from 'redux-saga/effects'
 import * as Type from '../actions/constants'
-import axios from '../api/axios'
+// import axios from '../api/axios'
+
+import { API_ODDS } from '../api/mock'
 
 import { requestOdds, requestOddsSuccess, requestOddsError } from '../actions/OddsActions'
 
@@ -11,7 +13,8 @@ function* watchGetOdds() {
 function* getOddsWorker(action) {
   try {
     yield put(requestOdds())
-    const odds = yield call(() => axios.get(`/odds/league/2/bookmaker/1`))
+    // const odds = yield call(() => axios.get(`/odds/league/2`))
+    const odds = API_ODDS
     console.log('odds: ', odds)
     yield put(requestOddsSuccess(odds))
   } catch (error) {

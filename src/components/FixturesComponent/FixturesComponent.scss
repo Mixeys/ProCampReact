@@ -6,8 +6,8 @@
     display: flex;
     justify-content: flex-end;
     padding: 5px;
-    &_start {
-      justify-content: flex-start;
+    & button {
+      margin-right: 15px;
     }
   }
   &-title {

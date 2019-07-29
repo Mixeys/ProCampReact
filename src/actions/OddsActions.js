@@ -9,7 +9,7 @@ const requestOdds = () => {
 const requestOddsSuccess = data => {
   return {
     type: Type.GET_ODDS_SUCCESS,
-    payload: data.data.api.odds,
+    payload: data,
   }
 }
 

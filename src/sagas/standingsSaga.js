@@ -11,8 +11,7 @@ function* watchGetStandings() {
 function* getStandingsWorker(action) {
   try {
     yield put(requestStandings())
-    const standings = yield call(() => axios.get(`/leagueTable/2`))
-    console.log('standings: ', standings)
+    const standings = yield call(() => axios.get(`/leagueTable/${action.payload}`))
     yield put(requestStandingsSuccess(standings))
   } catch (error) {
     yield put(requestStandingsError(error))

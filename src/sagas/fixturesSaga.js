@@ -8,10 +8,10 @@ function* watchGetFixtures() {
   yield takeEvery(Type.FETCHED_FIXTURES, getFixturesWorker)
 }
 
-function* getFixturesWorker() {
+function* getFixturesWorker(action) {
   try {
     yield put(requestFixtures())
-    const fixtures = yield call(() => axios.get(`/fixtures/league/2`))
+    const fixtures = yield call(() => axios.get(`/fixtures/league/${action.payload}`))
     yield put(requestFixturesSuccess(fixtures))
   } catch (error) {
     yield put(requestFixturesError(error))
